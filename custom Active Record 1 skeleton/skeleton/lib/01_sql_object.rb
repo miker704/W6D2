@@ -28,7 +28,7 @@ class SQLObject
 
   def self.table_name
     # ...
-    table_name || self.name.underscore.pluralize
+    @table_name || self.name.underscore.pluralize
   end
 
   def self.all
@@ -67,6 +67,12 @@ class SQLObject
 
   def attribute_values
     # ...
+
+    return self.class.columns.map do |attr|
+       self.send(atrr)
+    end
+      
+  
   end
 
   def insert
@@ -79,5 +85,8 @@ class SQLObject
 
   def save
     # ...
+
+    return  id.nil? ? insert : update
+
   end
 end
