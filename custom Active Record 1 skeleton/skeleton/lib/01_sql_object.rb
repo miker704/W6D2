@@ -22,22 +22,35 @@ class SQLObject
   end
 
   def self.table_name=(table_name)
+    @table_name = table_name
     # ...
   end
 
   def self.table_name
     # ...
+    table_name || self.name.underscore.pluralize
   end
 
   def self.all
     # ...
+    search_result = DBConnection.execute(<<-SQL)
+    SELECT #{table_name}.*
+    FROM #{tabel_name}
+    SQL
+    parse_all(search_result)
   end
 
   def self.parse_all(results)
     # ...
+    results.map |num| self.new(num)
   end
 
-  def self.find(id)
+  def self.find(id) #find by id 
+    search_result = DBConnection.execute(<<-SQL)
+    SELECT #{table_name}.*
+    FROM #{tabel_name}
+    SQL
+
     # ...
   end
 
