@@ -132,5 +132,23 @@ class MetaCorgiSnacks
 
   def self.define_snack(name)
     # Your code goes here...
+
+      define_method(name) do
+        information = @snack_box.send{"get #{name}", @box_id}
+        tastiness_lvl = @snack_box.send("get_ #{name} _tastiness_level", @box_id)
+
+      print_name = "#{name.split('_')
+                     .map(&:capitalize)  
+                     .join(' ')}"
+
+      res = "#{print_name}: #{information}: #{tastiness_lvl}"
+  
+      tastiness_lvl > 30 ? "* #{res}" : res
+      
+    end
+
+
+
+
   end
 end
