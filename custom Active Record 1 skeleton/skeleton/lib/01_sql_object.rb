@@ -6,6 +6,16 @@ require 'active_support/inflector'
 class SQLObject
   def self.columns
     # ...
+    return @columns if @columns # return column is it yields some truthy value
+    # establish data base connections
+    colums = DBConnection.execute2(<<-SQL).first
+    select *
+    from 
+      #{self.table_name}
+    limit 0
+    SQL
+    colums.map!(&:to_sym)
+    @columns=colums
   end
 
   def self.finalize!
@@ -36,7 +46,10 @@ class SQLObject
   end
 
   def attributes
-    # ...
+    # ... assign attribs as null or some hash
+    @attributes ||={}
+
+
   end
 
   def attribute_values
