@@ -1,4 +1,7 @@
 class AttrAccessorObject
+
+
+
   def self.my_attr_accessor(*names)
     # ...
 
@@ -15,7 +18,17 @@ class AttrAccessorObject
                     instance_variable_set("@#{nm}",v)
 
                 end
-
+            SELECT
+          {source_table}.*
+        FROM
+          {through_table}
+        JOIN
+          {source_table}
+        ON
+          {through_table}.{source_fk} = {source_table}.{source_pk}
+        WHERE
+          {through_table}.{through_pk} = ?
+      SQL
     end
 
     end
